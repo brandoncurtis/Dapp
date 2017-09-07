@@ -1,0 +1,51 @@
+<head>
+  <title>dapp</title>
+</head>
+
+<body>
+  <h1>Decentralized Derivatives Dapp</h1>
+
+  {{> hello}}
+  {{> factory}}
+  {{> swap}}
+    <p>To Do</p>
+    <p>Form for Factory - Pay Fee and Get Address Returned / Error handling</p>
+    <p>Form for Swap -Enter Address, Have it know which form based on state, then enter details, enter, calculate, or pay</p>
+
+
+</body>
+
+<template name="hello">
+  <p>Amount of Ether in your metamask account: {{counter}} {{TemplateVar.get "counter"}}</p>
+    <p>Fee: {{counter1}} {{TemplateVar.get "counter1"}}</p>
+</template>
+
+
+<template name ="factory">
+    <button class="create">Create Contract</button>
+    <p>{{createContract}}{{TemplateVar.get "createContract"}}</p>
+
+
+</template>
+
+
+<template name="swap">
+<form action="/action_page.php">
+  Swap Address:<br>
+  <input type="text" name="" value="">
+</form>
+<br>
+<br>
+<form action="/action_page.php">
+  ECP status: <input type="text" name="" value=""><br>
+  User Margin: <input type="text" name="" value=""><br>
+  Counterparty Margin: <input type="text" name="" value=""><br>
+  Notional: <input type="text" name="" value=""><br>
+  Directionality: <input type="text" name="" value=""><br>
+  Start Date: <input type="text" name="" value=""><br>
+  End Date: <input type="text" name="" value=""><br>
+</form>
+     <button class="details">Enter Details</button>
+    <p>{{createContract}}{{TemplateVar.get "createContract"}}</p>
+
+</template>
