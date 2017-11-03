@@ -6,8 +6,8 @@ import './Lib/lib.js';
 
 
 var ABIarray = [{"constant":true,"inputs":[],"name":"creator","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"createContract","outputs":[{"name":"","type":"address"}],"payable":true,"type":"function"},{"constant":false,"inputs":[{"name":"_fee","type":"uint256"}],"name":"setFee","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"newContracts","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"fee","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"withdrawFee","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"oracleID","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"inputs":[{"name":"_oracleID","type":"address"}],"payable":false,"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_name","type":"address"},{"indexed":false,"name":"_value","type":"address"}],"name":"Print","type":"event"}];
-var contractAddress ="0x1109626f588995a2614ac4fcc2ed46b46f213453";
-
+var contractAddress ="0x4870a9da5999209e03a70f48ec4eca924d3f6fe2";
+var sABI = [{"constant":true,"inputs":[],"name":"creator","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function","stateMutability":"view"},{"constant":true,"inputs":[],"name":"startDate","outputs":[{"name":"","type":"bytes32"}],"payable":false,"type":"function","stateMutability":"view"},{"constant":true,"inputs":[],"name":"currentState","outputs":[{"name":"","type":"uint8"}],"payable":false,"type":"function","stateMutability":"view"},{"constant":true,"inputs":[],"name":"share_short","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function","stateMutability":"view"},{"constant":true,"inputs":[],"name":"smargin","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function","stateMutability":"view"},{"constant":false,"inputs":[{"name":"ECP","type":"bool"},{"name":"_margin","type":"uint256"},{"name":"_margin2","type":"uint256"},{"name":"_notional","type":"uint256"},{"name":"_long","type":"bool"},{"name":"_startDate","type":"bytes32"},{"name":"_endDate","type":"bytes32"},{"name":"_l_premium","type":"uint256"},{"name":"_s_premium","type":"uint256"}],"name":"CreateSwap","outputs":[],"payable":true,"type":"function","stateMutability":"payable"},{"constant":true,"inputs":[],"name":"paid_short","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function","stateMutability":"view"},{"constant":true,"inputs":[],"name":"cancel_long","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function","stateMutability":"view"},{"constant":true,"inputs":[],"name":"lmargin","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function","stateMutability":"view"},{"constant":true,"inputs":[],"name":"s_premium","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function","stateMutability":"view"},{"constant":true,"inputs":[],"name":"l_premium","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function","stateMutability":"view"},{"constant":true,"inputs":[],"name":"short_party","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function","stateMutability":"view"},{"constant":true,"inputs":[],"name":"paid_long","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function","stateMutability":"view"},{"constant":true,"inputs":[],"name":"long_party","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function","stateMutability":"view"},{"constant":true,"inputs":[{"name":"key","type":"bytes32"}],"name":"RetrieveData","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function","stateMutability":"view"},{"constant":true,"inputs":[],"name":"cancel_short","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function","stateMutability":"view"},{"constant":false,"inputs":[],"name":"Calculate","outputs":[],"payable":false,"type":"function","stateMutability":"nonpayable"},{"constant":false,"inputs":[{"name":"ECP","type":"bool"},{"name":"_margin","type":"uint256"},{"name":"_notional","type":"uint256"},{"name":"_long","type":"bool"},{"name":"_startDate","type":"bytes32"},{"name":"_endDate","type":"bytes32"},{"name":"_l_premium","type":"uint256"},{"name":"_s_premium","type":"uint256"}],"name":"EnterSwap","outputs":[{"name":"","type":"bool"}],"payable":true,"type":"function","stateMutability":"payable"},{"constant":true,"inputs":[],"name":"endDate","outputs":[{"name":"","type":"bytes32"}],"payable":false,"type":"function","stateMutability":"view"},{"constant":true,"inputs":[],"name":"share_long","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function","stateMutability":"view"},{"constant":false,"inputs":[],"name":"Exit","outputs":[],"payable":false,"type":"function","stateMutability":"nonpayable"},{"constant":false,"inputs":[],"name":"PaySwap","outputs":[],"payable":false,"type":"function","stateMutability":"nonpayable"},{"constant":true,"inputs":[],"name":"oracleID","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function","stateMutability":"view"},{"constant":true,"inputs":[],"name":"notional","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function","stateMutability":"view"},{"inputs":[{"name":"OAddress","type":"address"},{"name":"_cpty1","type":"address"},{"name":"_creator","type":"address"}],"payable":false,"type":"constructor","stateMutability":"nonpayable"}];
 var data = `6060604052341561000f57600080fd5b604051602080612181833981016040528080519060200190919050505b33600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1
 6021790555080600260006101000a81548173ffffffffffffffffffffffffffffffffffffffff02191
 6908373ffffffffffffffffffffffffffffffffffffffff1602179055505b505b6120c180
@@ -31,7 +31,7 @@ Template.hello.onCreated(function helloOnCreated() {
 Template.hello.helpers({
   counter() {
   	var template = Template.instance();
-    web3.eth.getBalance("0xE5078b80b08bD7036fc0f7973f667b6aa9B4ddBE",
+    web3.eth.getBalance(web3.eth.accounts[0],
     	function(err,res){
     	TemplateVar.set(template, "counter", web3.fromWei(res));
     })
@@ -57,10 +57,6 @@ Template.hello.events({
 
 
 Template.factory.helpers({
-	createContract() {
-  	var template = Template.instance();
-  	var fContract = web3.eth.contract(ABIarray).at(contractAddress);
-  },
 });
 
 async function waitForTxToBeMined (txHash) {
@@ -76,6 +72,7 @@ async function waitForTxToBeMined (txHash) {
 }
 
 Template.factory.events({
+
 	'click button.create': function (err, template) {
     fContract.createContract({from:web3.eth.accounts[0],value:newval,gas: 2000000},function(error, result){
     if(!error) {
@@ -84,8 +81,58 @@ Template.factory.events({
         console.error(error);
     }
   })
-}
- });
+},
+	'click button.addresult': function (err, template) {
+	let transferEvent = fContract.Print({}, {fromBlock: 0, toBlock: 'latest'})
+	transferEvent.get((error, logs) => {
+	  // we have the logs, now print them
+	  logs.forEach(log => console.log(log.args['_value']))
+	  console.log(logs[logs.length-1].args['_value'])
+	  for(i = logs.length-1; i > 0; i--){
+	  	if(logs[i].args['_name'] == web3.eth.accounts[0]){
+	 		 var check = logs[i].args['_value'];
+	 		 i = 0;
+	 	}
+  	  }
+  	  document.getElementById("returnedadd").innerHTML = check;
+	})
+	},
+
+	   });
+
+
+Template.bulletin.events({
+
+	'click button.bulletin': function (err, template) {
+	let transferEvent = fContract.Print({}, {fromBlock: 0, toBlock: 'latest'})
+	transferEvent.get((error, logs) => {
+	  // we have the logs, now print them
+	  logs.forEach(log => console.log(log.args['_value']))
+	  console.log(logs[logs.length-1].args['_value'])
+	  var check = "<br>";
+	  for(i = 0; i < logs.length; i++){
+	 	check += logs[i].args['_value'] + "<br>";
+  	 		var add = logs[i].args['_value'];
+			var sInstance = web3.eth.contract(sABI).at(add);
+			var j = 0;
+			j = sInstance.currentState.call(function(err,res){j = res.toNumber();
+			console.log(j);
+				if (j>0 && j < 4){ console.log('State- ',sInstance.currentState.call(function(err,res){return res.toNumber()}));
+				console.log('Notional-'); sInstance.notional.call(function(err,res){console.log(res.toNumber())});
+				 console.log(' Long Margin-');sInstance.lmargin.call(function(err,res){console.log(res.toNumber())});
+				 console.log(' Short Margin-');sInstance.smargin.call(function(err,res){console.log(res.toNumber())});
+				 console.log(' Long Premium-');sInstance.l_premium.call(function(err,res){console.log(res.toNumber())});
+				 console.log(' Short Premium- ');sInstance.s_premium.call(function(err,res){console.log(res.toNumber())});
+				 console.log(' StartDate-');sInstance.startDate.call(function(err,res){console.log(web3.toAscii(res).substring(0,8))});
+				 console.log(' endDate-');sInstance.endDate.call(function(err,res){console.log(web3.toAscii(res).substring(0,8))});
+					}
+				})
+		}
+  	  document.getElementById("bulletinboard").innerHTML = check;
+	})
+	},
+
+});
 
 Template.swap.onCreated(function swapOnCreated() {
   // counter starts at 0
@@ -96,7 +143,7 @@ Template.swap.onCreated(function swapOnCreated() {
 Template.swap.helpers({
   counter2() {
   	var template = Template.instance();
-    web3.eth.getBalance("0xE5078b80b08bD7036fc0f7973f667b6aa9B4ddBE",
+    web3.eth.getBalance(web3.eth.accounts[0],
     	function(err,res){
     	TemplateVar.set(template, "counter2", res);
     })
@@ -104,8 +151,149 @@ Template.swap.helpers({
 });
 
 Template.swap.events({
-  'click button'(event, instance) {
-    // increment the counter when button is clicked
-    instance.counter.set(instance.counter2.get() + 1);
-  },
+	'click button.swap':function (err, template) {
+    var x = document.getElementById("SwapForm");
+    var nums = [];
+    var bools = [];
+    var dates = [];
+    var i;
+    for (i = 0; i < x.length ;i++) {
+    	if(i==0){
+    		var s_address = x.elements[i].value;
+    	}
+    	else if(i==1 || i ==5){
+    		bools[i] = (x.elements[i].value == 'true');
+    	}
+    	else if(i==2 || i ==3 || i==4 || i > 7){
+    		nums[i] = parseInt(x.elements[i].value);
+    	}
+    	else if (i == 6 || i == 7){
+    		dates[i]="" + x.elements[i].value
+    	}
+        
+    }
+    var eth_val = 0;
+    if (bools[5] == true) {
+    	eth_val = eval(nums[3]+nums[8]/1000)
+    }
+    else {
+    	eth_val = eval(nums[3]+nums[9]/1000)
+    }
+    console.log(s_address,bools[1],nums[2],nums[3],nums[4],bools[5],web3.fromAscii(dates[6]),web3.fromAscii(dates[7]),nums[8],nums[9]);
+
+    console.log(true,1, 1, 10, true, web3.fromAscii("20170730"),web3.fromAscii("20170731"),0,0)
+    console.log(s_address)
+    	var sContract = web3.eth.contract(sABI).at(s_address);
+
+	    sContract.CreateSwap(bools[1],nums[2],nums[3],nums[4],bools[5],web3.fromAscii(dates[6]),web3.fromAscii(dates[7]),nums[8],nums[9],{from:web3.eth.accounts[0],value: web3.toWei(eth_val, 'ether'),gas: 2000000},function(error, result){
+	    if(!error) {
+	        console.log("#" + result + "#")
+	    } else {
+	        console.error(error);
+	    }
+	})
+},
+});
+
+Template.enterswap.events({
+	'click button.eswap':function (err, template) {
+    var x = document.getElementById("ESwapForm");
+    var nums = [];
+    var bools = [];
+    var dates = [];
+    var i;
+    for (i = 0; i < x.length ;i++) {
+    	if(i==0){
+    		var s_address = x.elements[i].value;
+    	}
+    	else if(i==1 || i ==5){
+    		bools[i] = (x.elements[i].value == 'true');
+    	}
+    	else if(i==2 || i ==3 || i==4 || i > 7){
+    		nums[i] = parseInt(x.elements[i].value);
+    	}
+    	else if (i == 6 || i == 7){
+    		dates[i]="" + x.elements[i].value
+    	}
+        
+    }
+    var eth_val = 0;
+    if (bools[5] == true) {
+    	eth_val = eval(nums[3]+nums[8]/1000)
+    }
+    else {
+    	eth_val = eval(nums[3]+nums[9]/1000)
+    }
+    console.log(s_address,bools[1],nums[2],nums[3],nums[4],bools[5],web3.fromAscii(dates[6]),web3.fromAscii(dates[7]),nums[8],nums[9]);
+
+	console.log(s_address)
+    	var sContract = web3.eth.contract(sABI).at(s_address);
+	    sContract.EnterSwap(bools[1],nums[2],nums[4],bools[5],web3.fromAscii(dates[6]),web3.fromAscii(dates[7]),nums[8],nums[9],{from:web3.eth.accounts[0],value: web3.toWei(eth_val, 'ether'),gas: 2000000},function(error, result){
+	    if(!error) {
+	        console.log("#" + result + "#")
+	    } else {
+	        console.error(error);
+	    }
+	})
+},
+});
+
+Template.calculate.events({
+	'click button.calculate':function (err, template) {
+		var x = document.getElementById("calculate");
+		var s_address = x.elements[0].value;
+	console.log(s_address)
+    	var sContract = web3.eth.contract(sABI).at(s_address);
+	    sContract.Calculate({from:web3.eth.accounts[0],value: 0,gas: 2000000},function(error, result){
+	    if(!error) {
+	        console.log("#" + result + "#")
+	    } else {
+	        console.error(error);
+	    }
+	})
+},
+});
+
+Template.exit.events({
+	'click button.exit':function (err, template) {
+		var x = document.getElementById("exit");
+		var s_address = x.elements[0].value;
+	console.log(s_address)
+    	var sContract = web3.eth.contract(sABI).at(s_address);
+	    sContract.Exit({from:web3.eth.accounts[0],value: 0,gas: 2000000},function(error, result){
+	    if(!error) {
+	        console.log("#" + result + "#")
+	    } else {
+	        console.error(error);
+	    }
+	})
+},
+});
+
+
+Template.payswap.events({
+	'click button.payswap':function (err, template) {
+		var x = document.getElementById("payswap");
+		var s_address = x.elements[0].value;
+	console.log(s_address)
+
+    	var sContract = web3.eth.contract(sABI).at(s_address);
+	    sContract.PaySwap({from:web3.eth.accounts[0],value: 0,gas: 2000000},function(error, result){
+	    if(!error) {
+	        console.log("#" + result + "#")
+	    } else {
+	        console.error(error);
+	    }
+	})
+},
+});
+
+Template.dateconvert.events({
+	'click button.dateconvert':function (err, template) {
+	var x = document.getElementById("dateconvert");
+	var date = web3.fromAscii(x.elements[0].value);
+	console.log("\"" + date+ "\"")
+
+    document.getElementById("hexdate").innerHTML = "\"" + date+ "\"";
+},
 });
