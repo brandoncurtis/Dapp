@@ -179,6 +179,8 @@ Template.swap.events({
     else {
     	eth_val = eval(nums[3]+nums[9]/1000)
     }
+    console.log(eth_val)
+    console.log(web3.toWei(eth_val, 'ether'))
     console.log(s_address,bools[1],nums[2],nums[3],nums[4],bools[5],web3.fromAscii(dates[6]),web3.fromAscii(dates[7]),nums[8],nums[9]);
 
     console.log(true,1, 1, 10, true, web3.fromAscii("20170730"),web3.fromAscii("20170731"),0,0)

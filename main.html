@@ -7,7 +7,7 @@
 
   {{> hello}}
   {{> factory}}
-  {{> dateconvert}}
+  <!--{{> dateconvert}} -->
   {{> swap}}
   {{> enterswap}}
   {{> calculate}}
@@ -48,16 +48,16 @@
 <br>
 <form id="SwapForm" action="/action_page.php"
 onsubmit = "return validateForm()" method = "post">
-  Swap Address:<input type="text" name="" value=""><br>
-  ECP status: <input type="text" name="" value=false><br>
-  User Margin: <input type="text" name="" value=0><br>
-  Counterparty Margin: <input type="text" name="" value=0><br>
-  Notional: <input type="text" name="" value=0><br>
-  Long: <input type="text" name="" value=true><br>
-  Start Date: <input type="text" name="" value=20171030><br>
-  End Date: <input type="text" name="" value=20171031><br>
-  Long Premium: <input type="text" name="" value=0><br>
-  Short Premium: <input type="text" name="" value=0><br>
+  <p>Swap Address:<input type="text" name="" value=""><i>Enter Swap Adress (e.g. 0xc5dd96093273fe04aa5e20f21846b0aca57c8639 )</i></p>
+  <p>ECP status: <input type="text" name="" value=false><i>Eligible Contract Participant Status (true or false)(Must be true to enter swap)</i></p>
+  <p>User Margin: <input type="text" name="" value=0><i>Enter your margin in Ether (max amount you can lose)</i></p>
+  <p>Counterparty Margin: <input type="text" name="" value=0><i>Enter in the other party's margin in Ether</i></p>
+  <p>Notional: <input type="text" name="" value=0><i>Enter amount that the reference rate is calculated on.  Notional/your margin is your leverage to the rate.  1/ (notional/counterparty margin) is what your gains are capped at</i></p>
+  <p>Long: <input type="text" name="" value=true><i>Are you long the reference rate (true or false)?</i></p>
+  <p>Start Date: <input type="text" name="" value=20171030><i> Enter start date in YYYYMMDD</i></p>
+  <p>End Date: <input type="text" name="" value=20171031><i> Enter end date in YYYYMMDD</i></p>
+  <p>Long Premium: <input type="text" name="" value=0><i>Enter in premium that you pay in finney(1/1000 of an eth).  e.g. 100 = .1 Eth</i></p>
+  <p>Short Premium: <input type="text" name="" value=0><i>Enter in premium that the other party pays in finney(1/1000 of an eth).  e.g. 100 = .1 Eth</i></p>
 </form>
     <button class="swap">Submit Swap</button>
     <p>{{createContract}}{{TemplateVar.get "createContract"}}</p>
@@ -65,7 +65,7 @@ onsubmit = "return validateForm()" method = "post">
 </template>
 
 
-<template name="dateconvert">
+ <template name="dateconvert">
 <br>
 <br>
 <form id="dateconvert" action="/action_page.php"
@@ -83,16 +83,16 @@ onsubmit = "return validateForm()" method = "post">
 <br>
 <form id="ESwapForm" action="/action_page.php"
 onsubmit = "return validateForm()" method = "post">
-  Swap Address:<input type="text" name="" value=""><br>
-  ECP status: <input type="text" name="" value=false><br>
-  Party1 Margin: <input type="text" name="" value=0><br>
-  Your Margin: <input type="text" name="" value=0><br>
-  Notional: <input type="text" name="" value=0><br>
-  Long: <input type="text" name="" value=true><br>
-  Start Date: <input type="text" name="" value=20171030><br>
-  End Date: <input type="text" name="" value=20171031><br>
-  Long Premium: <input type="text" name="" value=0><br>
-  Short Premium: <input type="text" name="" value=0><br>
+  <p>Swap Address:<input type="text" name="" value=""><i>Enter Swap Adress (e.g. 0xc5dd96093273fe04aa5e20f21846b0aca57c8639 )</i></p>
+  <p>ECP status: <input type="text" name="" value=false><i>Eligible Contract Participant Status (true or false)(Must be true to enter swap)</i></p>
+  <p>Party1 Margin: <input type="text" name="" value=0><i>Enter in the other party's margin in Ether</i></p>
+  <p>Your Margin: <input type="text" name="" value=0><i>Enter your margin in Ether (max amount you can lose)</i></p>
+  <p>Notional: <input type="text" name="" value=0><i>Enter amount that the reference rate is calculated on.  Notional/your margin is your leverage to the rate.  1/ (notional/counterparty margin) is what your gains are capped at</i></p>
+  <p>Long: <input type="text" name="" value=true><i>Enter in premium that you pay in finney(1/1000 of an eth).  e.g. 100 = .1 Eth</i></p>
+  <p>Start Date: <input type="text" name="" value=20171030><i> Enter start date in YYYYMMDD</i></p>
+  <p>End Date: <input type="text" name="" value=20171031><i> Enter end date in YYYYMMDD</i></p>
+  <p>Long Premium: <input type="text" name="" value=0><i>Enter in premium that the other party pays in finney(1/1000 of an eth).  e.g. 100 = .1 Eth</i></p>
+  <p>Short Premium: <input type="text" name="" value=0><i>Enter in premium that you pay in finney(1/1000 of an eth).  e.g. 100 = .1 Eth</i></p>
 </form>
     <button class="eswap">Enter Swap</button>
 
