@@ -1,51 +1,86 @@
+
 <head>
-  <title>dapp</title>
+  <link rel="stylesheet" href="main.css"/>
+  <title >DDA DApp</title>
 </head>
 
 <body>
-  <h1>Decentralized Derivatives Dapp</h1>
+  
+<header class="dapp-header" id="Title">Decentralized Derivatives Association -- Contract Interaction Tool
+</header>
 
+<div class="dapp-flex-content">
   {{> hello}}
-  {{> factory}}
+</div>
+  {{> fee}}
+  {{> radioform}}
   <!--{{> dateconvert}} -->
-  {{> swap}}
-  {{> enterswap}}
-  {{> calculate}}
-  {{> payswap}}
+<aside class="dapp-actionbar">
+  <p id="radioselection"></p>
+  {{#if showFactory}}
+    {{> factory}}
+  {{/if}}
+  {{#if showSwap}}
+    {{> swap}}
+  {{/if}}
+  {{#if showEnterSwap}}
+    {{> enterswap}}
+  {{/if}}
+  {{#if showCalculate}}
+    {{> calculate}}
+  {{/if}}
+  {{#if showPaySwap}}
+    {{> payswap}}
+  {{/if}}
+  {{#if showExit}}
     {{> exit}}
-  {{> bulletin}}
+  {{/if}}
+  {{#if showBulletin}}
+    {{> bulletin}}
+  {{/if}}
 
-
-
+</aside>
 </body>
 
-<template name="hello">
-  <p>Amount of Ether in your metamask account: {{counter}} {{TemplateVar.get "counter"}}</p>
-    <p>Fee: {{counter1}} {{TemplateVar.get "counter1"}}</p>
-</template>
-
-
-<template name ="factory">
-    <button class="create">Create Contract</button>
-    <p>{{createContract}}{{TemplateVar.get "createContract"}}</p>
-    <button class="addresult">Address Result</button>
-    <p>New Address:</p><p id="returnedadd"> None </p>
-
+<template name="radioform">
+<button class="radioFactory" id='main'>Create Contract</button>
+<button class="radioSwap" id='main'>Create Swap</button>
+<button class="radioEnterSwap" id='main'>Enter Open Swap</button>
+<button class="radioCalculate" id='main'>Calculate</button>
+<button class="radioPaySwap" id='main'>Pay Swap</button>
+<button class="radioExit" id='main'>Exit</button>
+<button class="radioBulletin" id='main'>List Open Swaps</button>
 
 </template>
+
+
 
 <template name ="bulletin">
   <br>
   <br>
     <button class="bulletin">List Opens</button>
     <p>Open Swaps:</p><p id="bulletinboard"> ---- </p>
+</template>
+
+
+<template name="hello">
+  <p>Amount of Ether in your metamask account: {{counter}} {{TemplateVar.get "counter"}}</p>
+</template>
+
+<template name="fee">
+    <p>Fee: {{counter1}} {{TemplateVar.get "counter1"}}</p>
+</template>
+
+<template name ="factory">
+    <div id='main'><button class="create">Create Contract</button></div>
+    <p>{{createContract}}{{TemplateVar.get "createContract"}}</p>
+    <div id='main'><button class="addresult">Address Result</button></div>
+    <p>New Address:</p><p id="returnedadd"></p>
 
 
 </template>
 
 <template name="swap">
-<br>
-<br>
 <form id="SwapForm" action="/action_page.php"
 onsubmit = "return validateForm()" method = "post">
   <p>Swap Address:<input type="text" name="" value=""><i>Enter Swap Adress (e.g. 0xc5dd96093273fe04aa5e20f21846b0aca57c8639 )</i></p>
@@ -59,7 +94,7 @@ onsubmit = "return validateForm()" method = "post">
   <p>Long Premium: <input type="text" name="" value=0><i>Enter in premium that you pay in finney(1/1000 of an eth).  e.g. 100 = .1 Eth</i></p>
   <p>Short Premium: <input type="text" name="" value=0><i>Enter in premium that the other party pays in finney(1/1000 of an eth).  e.g. 100 = .1 Eth</i></p>
 </form>
-    <button class="swap">Submit Swap</button>
+    <button class="swap" id='main'>Submit Swap</button>
     <p>{{createContract}}{{TemplateVar.get "createContract"}}</p>
 
 </template>
@@ -72,7 +107,7 @@ onsubmit = "return validateForm()" method = "post">
 onsubmit = "return validateForm()" method = "post">
   Date (YYYYMMDD):<input type="text" name="" value=""><br>
 </form>
-    <button class="dateconvert">Convert Date</button>
+    <button class="dateconvert" id='main'>Convert Date</button>
     <p>Hex Date:</p><p id="hexdate"> Enter Date </p>
 
 </template>
@@ -88,13 +123,13 @@ onsubmit = "return validateForm()" method = "post">
   <p>Party1 Margin: <input type="text" name="" value=0><i>Enter in the other party's margin in Ether</i></p>
   <p>Your Margin: <input type="text" name="" value=0><i>Enter your margin in Ether (max amount you can lose)</i></p>
   <p>Notional: <input type="text" name="" value=0><i>Enter amount that the reference rate is calculated on.  Notional/your margin is your leverage to the rate.  1/ (notional/counterparty margin) is what your gains are capped at</i></p>
-  <p>Long: <input type="text" name="" value=true><i>Enter in premium that you pay in finney(1/1000 of an eth).  e.g. 100 = .1 Eth</i></p>
+  <p>Long: <input type="text" name="" value=true><i>Are you long the reference rate (true or false)?</i></p>
   <p>Start Date: <input type="text" name="" value=20171030><i> Enter start date in YYYYMMDD</i></p>
   <p>End Date: <input type="text" name="" value=20171031><i> Enter end date in YYYYMMDD</i></p>
   <p>Long Premium: <input type="text" name="" value=0><i>Enter in premium that the other party pays in finney(1/1000 of an eth).  e.g. 100 = .1 Eth</i></p>
   <p>Short Premium: <input type="text" name="" value=0><i>Enter in premium that you pay in finney(1/1000 of an eth).  e.g. 100 = .1 Eth</i></p>
 </form>
-    <button class="eswap">Enter Swap</button>
+    <button class="eswap" id='main'>Enter Swap</button>
 
 </template>
 
@@ -105,7 +140,7 @@ onsubmit = "return validateForm()" method = "post">
 onsubmit = "return validateForm()" method = "post">
   Swap Address:<input type="text" name="" value=""><br>
 </form>
-    <button class="calculate">Calculate</button>
+    <button class="calculate" id='main'>Calculate</button>
 </template>
 
 
@@ -117,7 +152,7 @@ onsubmit = "return validateForm()" method = "post">
 onsubmit = "return validateForm()" method = "post">
   Swap Address:<input type="text" name="" value=""><br>
 </form>
-    <button class="payswap">Pay Swap</button>
+    <button class="payswap" id='main'>Pay Swap</button>
 </template>
 
 <template name="exit">
@@ -127,5 +162,5 @@ onsubmit = "return validateForm()" method = "post">
 onsubmit = "return validateForm()" method = "post">
   Swap Address:<input type="text" name="" value=""><br>
 </form>
-    <button class="exit">Exit</button>
+    <button class="exit" id='main'>Exit</button>
 </template>

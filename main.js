@@ -1,3 +1,6 @@
+//$ SET DEPLOY_HOSTNAME=galaxy.meteor.com
+//$ meteor deploy my-meteor-app.meteorapp.com --settings settings.json
+
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
@@ -36,10 +39,16 @@ Template.hello.helpers({
     	TemplateVar.set(template, "counter", web3.fromWei(res));
     })
   },
+});
+
+Template.fee.onCreated(function helloOnCreated() {
+  // counter starts at 0
+  this.counter1 = new ReactiveVar(0);
+});
+
+Template.fee.helpers({
     counter1() {
-
 	var template = Template.instance();
-
 	fContract.fee(function(err,res){
 		TemplateVar.set(template,"counter1",web3.fromWei(res))
 	});
@@ -100,6 +109,104 @@ Template.factory.events({
 
 	   });
 
+  Template.body.helpers({
+    showFactory() {
+      return Session.get('showFactory');
+    },
+     showSwap() {
+      return Session.get('showSwap');
+    },
+        showEnterSwap() {
+      return Session.get('showEnterSwap');
+    },
+        showCalculate() {
+      return Session.get('showCalculate');
+    },
+        showPaySwap() {
+      return Session.get('showPaySwap');
+    },
+        showExit() {
+      return Session.get('showExit');
+    }
+      ,  showBulletin() {
+      return Session.get('showBulletin');
+    }
+  });
+
+
+Template.radioform.events({
+    'click button.radioFactory'(event) {
+	Session.set('showSwap', false);
+	Session.set('showEnterSwap', false);
+	Session.set('showCalculate', false);
+	Session.set('showPaySwap', false);
+	Session.set('showExit', false);
+	Session.set('showBulletin', false);
+      event.preventDefault();
+      Session.set('showFactory', true);
+    },
+    'click button.radioSwap'(event) {
+    Session.set('showFactory', false);
+	Session.set('showEnterSwap', false);
+	Session.set('showCalculate', false);
+	Session.set('showPaySwap', false);
+	Session.set('showExit', false);
+	Session.set('showBulletin', false);
+	event.preventDefault();
+      Session.set('showSwap', true);
+    },
+        'click button.radioEnterSwap'(event) {
+      	Session.set('showSwap', false);
+	Session.set('showFactory', false);
+	Session.set('showCalculate', false);
+	Session.set('showPaySwap', false);
+	Session.set('showExit', false);
+	Session.set('showBulletin', false);
+	event.preventDefault();
+      Session.set('showEnterSwap', true);
+    },
+        'click button.radioCalculate'(event) {
+      	Session.set('showSwap', false);
+	Session.set('showEnterSwap', false);
+	Session.set('showFactory', false);
+	Session.set('showPaySwap', false);
+	Session.set('showExit', false);
+	Session.set('showBulletin', false);
+	event.preventDefault();
+      Session.set('showCalculate', true);
+    },
+        'click button.radioPaySwap'(event) {
+      	Session.set('showSwap', false);
+	Session.set('showEnterSwap', false);
+	Session.set('showCalculate', false);
+	Session.set('showFactory', false);
+	Session.set('showExit', false);
+	Session.set('showBulletin', false);
+	event.preventDefault();
+      Session.set('showPaySwap', true);
+    },
+        'click button.radioExit'(event) {
+      	Session.set('showSwap', false);
+	Session.set('showEnterSwap', false);
+	Session.set('showCalculate', false);
+	Session.set('showPaySwap', false);
+	Session.set('showFactory', false);
+	Session.set('showBulletin', false);
+	event.preventDefault();
+      Session.set('showExit', true);
+    },
+        'click button.radioBulletin'(event) {
+      	Session.set('showSwap', false);
+	Session.set('showEnterSwap', false);
+	Session.set('showCalculate', false);
+	Session.set('showPaySwap', false);
+	Session.set('showExit', false);
+	Session.set('showFactory', false);
+	event.preventDefault();
+      Session.set('showBulletin', true);
+    }
+
+});
 
 Template.bulletin.events({
 
@@ -117,14 +224,16 @@ Template.bulletin.events({
 			var j = 0;
 			j = sInstance.currentState.call(function(err,res){j = res.toNumber();
 			console.log(j);
-				if (j>0 && j < 4){ console.log('State- ',sInstance.currentState.call(function(err,res){return res.toNumber()}));
-				console.log('Notional-'); sInstance.notional.call(function(err,res){console.log(res.toNumber())});
-				 console.log(' Long Margin-');sInstance.lmargin.call(function(err,res){console.log(res.toNumber())});
-				 console.log(' Short Margin-');sInstance.smargin.call(function(err,res){console.log(res.toNumber())});
-				 console.log(' Long Premium-');sInstance.l_premium.call(function(err,res){console.log(res.toNumber())});
-				 console.log(' Short Premium- ');sInstance.s_premium.call(function(err,res){console.log(res.toNumber())});
-				 console.log(' StartDate-');sInstance.startDate.call(function(err,res){console.log(web3.toAscii(res).substring(0,8))});
-				 console.log(' endDate-');sInstance.endDate.call(function(err,res){console.log(web3.toAscii(res).substring(0,8))});
+				if (j>0 && j < 4){
+
+				 console.log('State- ',sInstance.currentState.call(function(err,res){return res.toNumber()}));
+				console.log('Notional-'); sInstance.notional.call(function(err,res){return res.toNumber()});
+				 console.log(' Long Margin-');sInstance.lmargin.call(function(err,res){return res.toNumber()});
+				 console.log(' Short Margin-');sInstance.smargin.call(function(err,res){return res.toNumber()});
+				 console.log(' Long Premium-');sInstance.l_premium.call(function(err,res){return res.toNumber()});
+				 console.log(' Short Premium- ');sInstance.s_premium.call(function(err,res){return res.toNumber()});
+				 console.log(' StartDate-');sInstance.startDate.call(function(err,res){return web3.toAscii(res).substring(0,8)});
+				 console.log(' endDate-');sInstance.endDate.call(function(err,res){return web3.toAscii(res).substring(0,8)});
 					}
 				})
 		}
