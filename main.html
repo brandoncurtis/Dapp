@@ -38,6 +38,14 @@
   {{#if showBulletin}}
     {{> bulletin}}
   {{/if}}
+    {{#if showmySwaps}}
+    {{> mySwaps}}
+  {{/if}}
+
+  {{#if showOracle}}
+    {{> Oracle}}
+  {{/if}}
+
 
 </aside>
 </body>
@@ -50,6 +58,8 @@
 <button class="radioPaySwap" id='main'>Pay Swap</button>
 <button class="radioExit" id='main'>Exit</button>
 <button class="radioBulletin" id='main'>List Open Swaps</button>
+<button class="radiomySwaps" id='main'>Show my Swaps</button>
+<button class="radioOracle" id='main'>Query Oracle</button>
 
 </template>
 
@@ -59,7 +69,25 @@
   <br>
   <br>
     <button class="bulletin">List Opens</button>
-    <p>Open Swaps:</p><p id="bulletinboard"> ---- </p>
+    <input type="text" id="date" name="date" value="20171101">
+    <p>Open Swap:</p><p id="bulletinState"> ---- </p>
+</template>
+
+<template name ="mySwaps">
+  <br>
+  <br>
+    <button class="OpenSwaps">Show Open Swaps</button>
+    <p>Open Swaps:</p><p id="openswaplist"> ---- </p>
+    <button class="ClosedSwaps">Show Closed Swaps</button>
+    <p>Closed Swaps:</p><p id="closedswaplist"> ---- </p>
+</template>
+
+<template name ="Oracle">
+  <br>
+  <br>
+    <button class="Oracle">Get Value</button>
+    <input type="text" id="odate" name="odate" value="20171101">
+    <p>Oracle Value:</p><p id="oraclevals"> ---- </p>
 </template>
 
 
@@ -83,16 +111,16 @@
 <template name="swap">
 <form id="SwapForm" action="/action_page.php"
 onsubmit = "return validateForm()" method = "post">
-  <p>Swap Address:<input type="text" name="" value=""><i>Enter Swap Adress (e.g. 0xc5dd96093273fe04aa5e20f21846b0aca57c8639 )</i></p>
-  <p>ECP status: <input type="text" name="" value=false><i>Eligible Contract Participant Status (true or false)(Must be true to enter swap)</i></p>
-  <p>User Margin: <input type="text" name="" value=0><i>Enter your margin in Ether (max amount you can lose)</i></p>
-  <p>Counterparty Margin: <input type="text" name="" value=0><i>Enter in the other party's margin in Ether</i></p>
-  <p>Notional: <input type="text" name="" value=0><i>Enter amount that the reference rate is calculated on.  Notional/your margin is your leverage to the rate.  1/ (notional/counterparty margin) is what your gains are capped at</i></p>
-  <p>Long: <input type="text" name="" value=true><i>Are you long the reference rate (true or false)?</i></p>
-  <p>Start Date: <input type="text" name="" value=20171030><i> Enter start date in YYYYMMDD</i></p>
-  <p>End Date: <input type="text" name="" value=20171031><i> Enter end date in YYYYMMDD</i></p>
-  <p>Long Premium: <input type="text" name="" value=0><i>Enter in premium that you pay in finney(1/1000 of an eth).  e.g. 100 = .1 Eth</i></p>
-  <p>Short Premium: <input type="text" name="" value=0><i>Enter in premium that the other party pays in finney(1/1000 of an eth).  e.g. 100 = .1 Eth</i></p>
+  <p>Swap Address:<input type="text" name="" value=""><i>Enter Swap Adress (e.g. 0xc5dd96093273fe04aa5e20f21846b0aca57c8639 )</i></p><p style="color:red;" id="addresserr"></p>
+  <p>ECP status: <input type="text" name="" value=false><i>Eligible Contract Participant Status (true or false)(Must be true to enter swap)</i></p><p style="color:red;" id="ecperr"></p>
+  <p>User Margin: <input type="text" name="" value=0><i>Enter your margin in Ether (max amount you can lose)</i></p><p style="color:red;" id="usermarerr"></p>
+  <p>Counterparty Margin: <input type="text" name="" value=0><i>Enter in the other party's margin in Ether</i></p><p style="color:red;" id="cptyerr"></p>
+  <p>Notional: <input type="text" name="" value=0><i>Enter amount that the reference rate is calculated on.  Notional/your margin is your leverage to the rate.  1/ (notional/counterparty margin) is what your gains are capped at</i></p><p style="color:red;" id="notionalerr"></p>
+  <p>Long: <input type="text" name="" value=true><i>Are you long the reference rate (true or false)?</i></p><p style="color:red;" id="longerr"></p>
+  <p>Start Date: <input type="text" name="" value=20171030><i> Enter start date in YYYYMMDD</i></p><p style="color:red;" id="startdateerr"></p>
+  <p>End Date: <input type="text" name="" value=20171031><i> Enter end date in YYYYMMDD</i></p><p style="color:red;" id="enddateerr"></p>
+  <p>Long Premium: <input type="text" name="" value=0><i>Enter in premium that you pay in finney(1/1000 of an eth).  e.g. 100 = .1 Eth</i></p><p id="longpremerr" style="color:red;"></p>
+  <p>Short Premium: <input type="text" name="" value=0><i>Enter in premium that the other party pays in finney(1/1000 of an eth).  e.g. 100 = .1 Eth</i></p><p id="shortpremerr" style="color:red;"></p>
 </form>
     <button class="swap" id='main'>Submit Swap</button>
     <p>{{createContract}}{{TemplateVar.get "createContract"}}</p>
@@ -138,7 +166,7 @@ onsubmit = "return validateForm()" method = "post">
 <br>
 <form id="calculate" action="/action_page.php"
 onsubmit = "return validateForm()" method = "post">
-  Swap Address:<input type="text" name="" value=""><br>
+  <p>Swap Address:<input type="text" name="" value=""><i>Enter Swap Adress (e.g. 0xc5dd96093273fe04aa5e20f21846b0aca57c8639 )</i></p><p style="color:red;" id="addresserr"></p>
 </form>
     <button class="calculate" id='main'>Calculate</button>
 </template>
@@ -150,7 +178,7 @@ onsubmit = "return validateForm()" method = "post">
 <br>
 <form id="payswap" action="/action_page.php"
 onsubmit = "return validateForm()" method = "post">
-  Swap Address:<input type="text" name="" value=""><br>
+  <p>Swap Address:<input type="text" name="" value=""><i>Enter Swap Adress (e.g. 0xc5dd96093273fe04aa5e20f21846b0aca57c8639 )</i></p><p style="color:red;" id="addresserr"></p>
 </form>
     <button class="payswap" id='main'>Pay Swap</button>
 </template>
@@ -160,7 +188,7 @@ onsubmit = "return validateForm()" method = "post">
 <br>
 <form id="exit" action="/action_page.php"
 onsubmit = "return validateForm()" method = "post">
-  Swap Address:<input type="text" name="" value=""><br>
+  <p>Swap Address:<input type="text" name="" value=""><i>Enter Swap Adress (e.g. 0xc5dd96093273fe04aa5e20f21846b0aca57c8639 )</i></p><p style="color:red;" id="addresserr"></p>
 </form>
     <button class="exit" id='main'>Exit</button>
 </template>
